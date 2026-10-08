@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { ExternalLink, Database, Server, Globe, Users, Zap, Shield } from "lucide-react";
 
 const projects = [
@@ -150,7 +151,25 @@ const projects = [
   },
 ];
 
+const categories = [
+  { id: "all", label: "All" },
+  { id: "fullstack", label: "Full Stack" },
+  { id: "backend", label: "Backend" },
+  { id: "data", label: "Data & Integration" },
+];
+
 export default function Projects() {
+  const [activeCategory, setActiveCategory] = useState("all");
+
+  const filteredProjects = activeCategory === "all"
+    ? projects
+    : projects.filter((p) => {
+        if (activeCategory === "fullstack") return p.category === "Full Stack";
+        if (activeCategory === "backend") return p.category === "Backend";
+        if (activeCategory === "data") return p.category === "Data Engineering" || p.category === "Integration";
+        return true;
+      });
+
   return (
     <section id="projects" className="relative py-24 md:py-32">
       <div className="max-w-7xl mx-auto px-6">
@@ -175,18 +194,31 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* Filter Tabs */}
+        {/* Filter Tabs - Mobile Optimized */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ delay: 0.2, duration: 0.5 }}
-          className="flex flex-wrap justify-center gap-3 mb-12"
+          className="mb-12"
         >
-          <button className="px-5 py-2 rounded-full bg-primary text-background font-medium text-sm">All</button>
-          <button className="px-5 py-2 rounded-full bg-card border border-card-border text-muted font-medium text-sm hover:border-primary/50 hover:text-foreground transition-colors">Full Stack</button>
-          <button className="px-5 py-2 rounded-full bg-card border border-card-border text-muted font-medium text-sm hover:border-primary/50 hover:text-foreground transition-colors">Backend</button>
-          <button className="px-5 py-2 rounded-full bg-card border border-card-border text-muted font-medium text-sm hover:border-primary/50 hover:text-foreground transition-colors">Data & Integration</button>
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3" role="tablist" aria-label="Project categories">
+            {categories.map((cat) => (
+              <button
+                key={cat.id}
+                role="tab"
+                aria-selected={activeCategory === cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`px-4 sm:px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                  activeCategory === cat.id
+                    ? "bg-primary text-background shadow-[0_4px_14px_rgba(0,212,170,0.4)]"
+                    : "bg-card border border-card-border text-muted hover:border-primary/50 hover:text-foreground"
+                }`}
+              >
+                {cat.label}
+              </button>
+            ))}
+          </div>
         </motion.div>
 
         {/* Projects Grid */}
@@ -195,9 +227,9 @@ export default function Projects() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ delay: 0.3, duration: 0.6 }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+          className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
-          {projects.map((project, index) => (
+          {filteredProjects.map((project, index) => (
             <motion.article
               key={project.name}
               initial={{ opacity: 0, y: 30 }}

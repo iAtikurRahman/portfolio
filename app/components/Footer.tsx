@@ -47,8 +47,8 @@ export default function Footer({ className = "" }: FooterProps) {
       <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent z-0" />
       <div className="absolute inset-0 bg-grid-pattern opacity-50" />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-6 py-16">
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+      <div className="relative z-10 max-w-7xl mx-auto px-6 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12 md:mb-16">
           {/* Brand */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -163,7 +163,7 @@ export default function Footer({ className = "" }: FooterProps) {
           </motion.div>
         </div>
 
-        {/* Bottom Bar */}
+        {/* Bottom Bar - Mobile Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -171,26 +171,26 @@ export default function Footer({ className = "" }: FooterProps) {
           transition={{ delay: 0.4, duration: 0.5 }}
           className="pt-8 border-t border-card-border"
         >
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <p className="text-sm text-muted">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4 md:gap-6">
+            <p className="text-sm text-muted text-center md:text-left">
               © {currentYear} MD. Atikur Rahman. All rights reserved.
             </p>
 
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted">Built with</span>
+            <div className="flex items-center gap-4 flex-wrap justify-center md:justify-start">
+              <span className="text-sm text-muted hidden sm:inline">Built with</span>
               <div className="flex items-center gap-1">
                 <Heart className="w-4 h-4 text-accent animate-pulse" aria-hidden="true" />
-                <span className="text-sm font-medium">Next.js</span>
+                <span className="text-sm font-medium hidden sm:inline">Next.js</span>
               </div>
-              <span className="text-muted">·</span>
+              <span className="text-muted hidden sm:inline">·</span>
               <div className="flex items-center gap-1">
                 <Code className="w-4 h-4 text-primary" aria-hidden="true" />
-                <span className="text-sm font-medium">TypeScript</span>
+                <span className="text-sm font-medium hidden sm:inline">TypeScript</span>
               </div>
-              <span className="text-muted">·</span>
+              <span className="text-muted hidden sm:inline">·</span>
               <div className="flex items-center gap-1">
                 <span className="w-4 h-4 rounded bg-gradient-to-r from-blue-500 to-cyan-500" />
-                <span className="text-sm font-medium">Tailwind</span>
+                <span className="text-sm font-medium hidden sm:inline">Tailwind</span>
               </div>
             </div>
 

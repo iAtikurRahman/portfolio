@@ -85,7 +85,7 @@ export default function Education() {
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 lg:gap-20">
-          {/* Education Timeline */}
+          {/* Education Timeline - Mobile First */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -93,7 +93,7 @@ export default function Education() {
             transition={{ duration: 0.6 }}
             className="relative"
           >
-            {/* Timeline Line */}
+            {/* Timeline Line - Mobile: left-6, Desktop: left-6 (same) */}
             <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent" />
 
             {education.map((edu, index) => (
@@ -105,7 +105,7 @@ export default function Education() {
                 transition={{ delay: index * 0.15, duration: 0.5 }}
                 className="relative pl-16 pb-12 last:pb-0"
               >
-                {/* Timeline Dot */}
+                {/* Timeline Dot - Positioned at left-6 (center of line) */}
                 <div className="absolute left-0 top-2 w-12 h-12 rounded-full border-4 flex items-center justify-center z-10" style={{
                   background: edu.color,
                   borderColor: edu.color,
@@ -119,8 +119,8 @@ export default function Education() {
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: `${edu.color}20` }}>
                       <edu.icon className="w-6 h-6" style={{ color: edu.color }} aria-hidden="true" />
                     </div>
-                    <div className="flex-1">
-                      <div className="flex items-center gap-3 text-sm text-muted mb-2">
+                    <div className="flex-1 min-w-0">
+                      <div className="flex flex-wrap items-center gap-3 text-sm text-muted mb-2">
                         <span className="flex items-center gap-1">
                           <Calendar className="w-3.5 h-3.5" aria-hidden="true" />
                           {edu.period}
@@ -180,8 +180,8 @@ export default function Education() {
                     >
                       <cert.icon className="w-6 h-6" style={{ color: cert.color }} aria-hidden="true" />
                     </div>
-                    <div className="flex-1">
-                      <h4 className="font-semibold">{cert.name}</h4>
+                    <div className="flex-1 min-w-0">
+                      <h4 className="font-semibold truncate">{cert.name}</h4>
                       <p className="text-sm text-muted">{cert.issuer}</p>
                     </div>
                     <div className="text-right">
@@ -205,7 +205,7 @@ export default function Education() {
                 and hands-on experimentation with emerging tools.
               </p>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {[
                   { title: "Currently Exploring", items: ["Rust", "WebAssembly", "Kubernetes", "GraphQL Federation"], color: "#00d4aa" },
                   { title: "Want to Learn", items: ["Go", "gRPC", "Event Sourcing", "Edge Computing"], color: "#6366f1" },

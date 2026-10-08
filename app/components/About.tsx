@@ -84,7 +84,7 @@ export default function About() {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <div className="glass rounded-3xl p-8 border border-card-border space-y-6">
+            <div className="glass rounded-3xl p-6 md:p-8 border border-card-border space-y-6">
               <h3 className="text-2xl font-bold">Professional Journey</h3>
               <div className="space-y-4 text-muted leading-relaxed">
                 <p>
@@ -111,7 +111,7 @@ export default function About() {
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
                       <Award className="w-5 h-5 text-primary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="font-medium">B.Sc. in Computer Science & Engineering</p>
                       <p className="text-sm text-muted">The Millennium University — 2020</p>
                     </div>
@@ -120,7 +120,7 @@ export default function About() {
                     <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center flex-shrink-0">
                       <Award className="w-5 h-5 text-secondary" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="font-medium">Diploma in Engineering, Computer Science</p>
                       <p className="text-sm text-muted">Rajshahi Polytechnic Institute — 2014</p>
                     </div>
@@ -129,7 +129,7 @@ export default function About() {
               </div>
             </div>
 
-            {/* Highlights */}
+            {/* Highlights - Mobile Responsive Grid */}
             <div className="grid grid-cols-2 gap-4">
               {highlights.map((highlight, index) => (
                 <motion.div
@@ -172,7 +172,7 @@ export default function About() {
                     >
                       <value.icon className="w-6 h-6" style={{ color: value.color }} aria-hidden="true" />
                     </div>
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <h4 className="text-lg font-semibold mb-1">{value.title}</h4>
                       <p className="text-sm text-muted">{value.description}</p>
                     </div>

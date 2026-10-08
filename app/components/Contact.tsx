@@ -96,7 +96,7 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             className="space-y-8"
           >
-            <div className="glass rounded-3xl p-8 border border-card-border h-full">
+            <div className="glass rounded-3xl p-6 md:p-8 border border-card-border h-full">
               <h3 className="text-2xl font-bold mb-8">Contact Information</h3>
 
               <div className="space-y-6 mb-8">
@@ -115,10 +115,10 @@ export default function Contact() {
                     >
                       <item.icon className="w-5 h-5" style={{ color: item.color }} aria-hidden="true" />
                     </div>
-                    <div>
+                    <div className="min-w-0">
                       <p className="text-sm text-muted mb-1">{item.title}</p>
                       {item.href ? (
-                        <a href={item.href} className="text-lg font-medium hover:text-primary transition-colors">
+                        <a href={item.href} className="text-lg font-medium hover:text-primary transition-colors break-words">
                           {item.value}
                         </a>
                       ) : (
@@ -154,7 +154,7 @@ export default function Contact() {
               </div>
             </div>
 
-            {/* Availability */}
+            {/* Availability - Mobile Responsive Grid */}
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -166,22 +166,22 @@ export default function Contact() {
                 <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
                 Availability
               </h4>
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div className="p-3 rounded-xl" style={{ background: "rgba(0, 212, 170, 0.1)" }}>
-                  <p className="text-primary font-semibold">Freelance Projects</p>
-                  <p className="text-muted">Open for opportunities</p>
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div className="p-3 sm:p-4 rounded-xl" style={{ background: "rgba(0, 212, 170, 0.1)" }}>
+                  <p className="text-primary font-semibold text-sm sm:text-base">Freelance Projects</p>
+                  <p className="text-muted text-xs sm:text-sm">Open for opportunities</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: "rgba(99, 102, 241, 0.1)" }}>
-                  <p className="text-secondary font-semibold">Full-time Roles</p>
-                  <p className="text-muted">Open to discussions</p>
+                <div className="p-3 sm:p-4 rounded-xl" style={{ background: "rgba(99, 102, 241, 0.1)" }}>
+                  <p className="text-secondary font-semibold text-sm sm:text-base">Full-time Roles</p>
+                  <p className="text-muted text-xs sm:text-sm">Open to discussions</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: "rgba(244, 63, 94, 0.1)" }}>
-                  <p className="text-accent font-semibold">Consulting</p>
-                  <p className="text-muted">Architecture & Code Review</p>
+                <div className="p-3 sm:p-4 rounded-xl" style={{ background: "rgba(244, 63, 94, 0.1)" }}>
+                  <p className="text-accent font-semibold text-sm sm:text-base">Consulting</p>
+                  <p className="text-muted text-xs sm:text-sm">Architecture & Code Review</p>
                 </div>
-                <div className="p-3 rounded-xl" style={{ background: "rgba(139, 92, 246, 0.1)" }}>
-                  <p className="text-purple-500 font-semibold">Mentoring</p>
-                  <p className="text-muted">Junior Developers</p>
+                <div className="p-3 sm:p-4 rounded-xl" style={{ background: "rgba(139, 92, 246, 0.1)" }}>
+                  <p className="text-purple-500 font-semibold text-sm sm:text-base">Mentoring</p>
+                  <p className="text-muted text-xs sm:text-sm">Junior Developers</p>
                 </div>
               </div>
             </motion.div>
@@ -194,7 +194,7 @@ export default function Contact() {
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.6 }}
           >
-            <div className="glass rounded-3xl p-8 border border-card-border">
+            <div className="glass rounded-3xl p-6 md:p-8 border border-card-border">
               <h3 className="text-2xl font-bold mb-6">Send a Message</h3>
 
               <form onSubmit={handleSubmit} className="space-y-5" noValidate>
@@ -276,7 +276,7 @@ export default function Contact() {
                 <button
                   type="submit"
                   disabled={status === "submitting"}
-                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-background bg-gradient-to-r from-primary via-primary to-secondary hover:from-primary-glow hover:to-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,212,170,0.4)] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background flex items-center justify-center gap-2"
+                  className="w-full inline-flex items-center justify-center gap-2 px-6 py-4 rounded-xl font-semibold text-background bg-gradient-to-r from-primary via-primary to-secondary hover:from-primary-glow hover:to-primary transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_10px_30px_rgba(0,212,170,0.4)] focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 focus:ring-offset-background"
                 >
                   {status === "submitting" ? (
                     <>

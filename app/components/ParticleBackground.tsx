@@ -1,10 +1,20 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function ParticleBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const animationRef = useRef<number | null>(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -13,15 +23,15 @@ export default function ParticleBackground() {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
 
-    // Use non-null assertions since we've checked above
     const canvasEl = canvas;
     const context = ctx;
 
     let width = 0;
     let height = 0;
     let particles: Particle[] = [];
-    const particleCount = 80;
-    const connectionDistance = 150;
+    // Reduce particle count on mobile for performance
+    const particleCount = isMobile ? 40 : 80;
+    const connectionDistance = isMobile ? 120 : 150;
     const mouse = { x: -1000, y: -1000 };
 
     interface Particle {
@@ -41,7 +51,7 @@ export default function ParticleBackground() {
       canvasEl.height = height * devicePixelRatio;
       canvasEl.style.width = `${width}px`;
       canvasEl.style.height = `${height}px`;
-      context.scale(devicePixelRatio, devicePixelRatio);
+      context.setTransform(devicePixelRatio, 0, 0, devicePixelRatio, 0, 0);
     }
 
     function createParticles() {
@@ -89,14 +99,16 @@ export default function ParticleBackground() {
         context.fillStyle = `${p.color}${opacityHex}`;
         context.fill();
 
-        // Glow effect
-        const gradient = context.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 4);
-        gradient.addColorStop(0, `${p.color}40`);
-        gradient.addColorStop(1, `${p.color}00`);
-        context.beginPath();
-        context.arc(p.x, p.y, p.radius * 4, 0, Math.PI * 2);
-        context.fillStyle = gradient;
-        context.fill();
+        // Glow effect - simplified on mobile
+        if (!isMobile) {
+          const gradient = context.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 4);
+          gradient.addColorStop(0, `${p.color}40`);
+          gradient.addColorStop(1, `${p.color}00`);
+          context.beginPath();
+          context.arc(p.x, p.y, p.radius * 4, 0, Math.PI * 2);
+          context.fillStyle = gradient;
+          context.fill();
+        }
       });
     }
 
@@ -105,14 +117,16 @@ export default function ParticleBackground() {
         p.x += p.vx;
         p.y += p.vy;
 
-        // Mouse interaction
-        const dx = mouse.x - p.x;
-        const dy = mouse.y - p.y;
-        const distance = Math.sqrt(dx * dx + dy * dy);
-        if (distance < 200 && distance > 0) {
-          const force = (200 - distance) / 200 * 0.5;
-          p.vx -= (dx / distance) * force;
-          p.vy -= (dy / distance) * force;
+        // Mouse interaction - disable on mobile for performance
+        if (!isMobile) {
+          const dx = mouse.x - p.x;
+          const dy = mouse.y - p.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          if (distance < 200 && distance > 0) {
+            const force = (200 - distance) / 200 * 0.5;
+            p.vx -= (dx / distance) * force;
+            p.vy -= (dy / distance) * force;
+          }
         }
 
         // Boundary bounce
@@ -136,8 +150,10 @@ export default function ParticleBackground() {
     }
 
     function handleMouseMove(e: MouseEvent) {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
+      if (!isMobile) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      }
     }
 
     function handleResize() {
@@ -149,6 +165,12 @@ export default function ParticleBackground() {
         p.x = (p.x / prevWidth) * width;
         p.y = (p.y / prevHeight) * height;
       });
+    }
+
+    // Handle prefers-reduced-motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) {
+      return;
     }
 
     resize();
@@ -163,7 +185,7 @@ export default function ParticleBackground() {
       window.removeEventListener("resize", handleResize);
       if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, []);
+  }, [isMobile]);
 
   return <canvas ref={canvasRef} id="particles-canvas" aria-hidden="true" />;
 }

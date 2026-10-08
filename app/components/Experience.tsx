@@ -102,35 +102,38 @@ export default function Experience() {
           </p>
         </motion.div>
 
-        {/* Timeline */}
+        {/* Timeline - Mobile First Single Column */}
         <div className="relative">
-          {/* Timeline Line */}
+          {/* Mobile Timeline Line - Left side */}
           <motion.div
             initial={{ scaleY: 0 }}
             whileInView={{ scaleY: 1 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 1, ease: [0.4, 0, 0.2, 1] }}
-            className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 bg-gradient-to-b from-primary via-secondary to-accent"
+            className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-primary via-secondary to-accent md:left-1/2 md:-translate-x-1/2"
           />
 
           {experiences.map((exp, index) => (
             <motion.div
               key={exp.role}
-              initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+              initial={{ opacity: 0, x: -30 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ delay: index * 0.15, duration: 0.6 }}
-              className={`relative w-full md:w-1/2 ${index % 2 === 0 ? "md:pr-16 text-right" : "md:pl-16 md:pt-8"}`}
+              className="relative w-full md:w-1/2 md:pl-16 md:pr-0"
             >
-              {/* Timeline Dot */}
-              <div className="absolute top-8 md:top-12 w-5 h-5 rounded-full border-4 z-10" style={{
-                left: index % 2 === 0 ? "calc(50% - 12px)" : "calc(50% - 12px)",
-                background: exp.color,
-                borderColor: exp.color,
-              }} />
-
+              {/* Timeline Dot - Mobile: left-6, Desktop: center */}
+              <div 
+                className="absolute top-8 w-5 h-5 rounded-full border-4 z-10"
+                style={{
+                  left: "6px",
+                  background: exp.color,
+                  borderColor: exp.color,
+                }}
+              />
+              
               {/* Experience Card */}
-              <div className="glass rounded-3xl p-6 md:p-8 border border-card-border card-hover relative">
+              <div className="glass rounded-3xl p-6 md:p-8 border border-card-border card-hover relative pl-16 md:pl-0">
                 {/* Header */}
                 <div className="flex items-start gap-4 mb-4">
                   <div

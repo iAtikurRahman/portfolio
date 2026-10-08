@@ -51,6 +51,29 @@ export default function Navigation() {
     }
   };
 
+  // Close mobile menu on escape key
+  useEffect(() => {
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isMobileMenuOpen) {
+        setIsMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleEscape);
+    return () => window.removeEventListener("keydown", handleEscape);
+  }, [isMobileMenuOpen]);
+
+  // Prevent body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMobileMenuOpen]);
+
   return (
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -101,6 +124,7 @@ export default function Navigation() {
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
             aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-menu"
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
           </button>
@@ -110,12 +134,16 @@ export default function Navigation() {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div
+              id="mobile-menu"
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
               className="md:hidden overflow-hidden border-t border-card-border bg-background/95 backdrop-blur-md"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Navigation menu"
             >
-              <div className="py-6 space-y-4 px-6">
+              <div className="py-6 space-y-2 px-6">
                 {navItems.map((item) => (
                   <Link
                     key={item.href}
@@ -124,7 +152,7 @@ export default function Navigation() {
                       e.preventDefault();
                       scrollToSection(item.href);
                     }}
-                    className="block text-lg font-medium text-muted hover:text-foreground transition-colors duration-300 py-2"
+                    className="block text-lg font-medium text-muted hover:text-foreground transition-colors duration-300 py-3 px-2 rounded-lg hover:bg-primary/10"
                   >
                     {item.label}
                   </Link>

@@ -194,7 +194,7 @@ export default function Skills() {
           transition={{ duration: 0.6 }}
         >
           <h3 className="text-2xl font-bold mb-8 text-center">Other Competencies</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
             {otherSkills.map((skill, index) => (
               <motion.div
                 key={skill.name}
@@ -216,16 +216,16 @@ export default function Skills() {
           </div>
         </motion.div>
 
-        {/* Proficiency Legend */}
+        {/* Proficiency Legend - Mobile Responsive */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-50px" }}
           transition={{ delay: 0.8, duration: 0.5 }}
-          className="mt-16 glass rounded-2xl p-6 border border-card-border"
+          className="glass rounded-2xl p-6 border border-card-border"
         >
           <h4 className="text-lg font-semibold mb-4 text-center">Proficiency Scale</h4>
-          <div className="grid grid-cols-5 gap-4 text-center">
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 text-center">
             {[
               { range: "90-100%", label: "Expert", color: "#00d4aa" },
               { range: "75-89%", label: "Advanced", color: "#6366f1" },
@@ -233,9 +233,9 @@ export default function Skills() {
               { range: "40-59%", label: "Learning", color: "#f43f5e" },
               { range: "0-39%", label: "Beginner", color: "#64748b" },
             ].map((level, index) => (
-              <div key={index} className="p-3 rounded-xl" style={{ background: `${level.color}15` }}>
+              <div key={index} className="p-3 md:p-4 rounded-xl" style={{ background: `${level.color}15` }}>
                 <div className="w-full h-2 rounded bg-gradient-to-r" style={{ background: `linear-gradient(90deg, ${level.color}, ${level.color}80)` }} />
-                <p className="text-xs font-medium mt-2" style={{ color: level.color }}>{level.label}</p>
+                <p className="text-xs md:text-sm font-medium mt-2" style={{ color: level.color }}>{level.label}</p>
                 <p className="text-xs text-muted">{level.range}</p>
               </div>
             ))}
