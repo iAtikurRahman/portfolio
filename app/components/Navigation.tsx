@@ -28,8 +28,8 @@ export default function Navigation() {
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const initialDark = savedTheme ? savedTheme === "dark" : prefersDark;
+    // Default to dark mode if no saved preference
+    const initialDark = savedTheme ? savedTheme === "dark" : true;
     setIsDark(initialDark);
     document.documentElement.classList.toggle("dark", initialDark);
     document.documentElement.classList.toggle("light", !initialDark);
